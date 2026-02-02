@@ -5,6 +5,7 @@
 
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 25
+#define VGA_AREA (VGA_HEIGHT * VGA_WIDTH)
 
 
 enum vga_colour

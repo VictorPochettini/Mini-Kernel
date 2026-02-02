@@ -5,7 +5,7 @@ static uint32_t cursor_x = 0;
 static uint32_t cursor_y = 0;
 static uint32_t position;
 static uint16_t character;
-static uint16_t colour = (uint16_t) VGA_WHITE << 8;;
+static uint16_t colour = (uint16_t) VGA_LIGHT_GREEN << 8;;
 static uint16_t printed;
 
 void vga_putchar(const char c)
@@ -58,6 +58,16 @@ void vga_putchar(const char c)
         cursor_y++;
         cursor_x = 0;
     }
+}
 
+void vga_clear()
+{
+    uint16_t blank = ' ' | (VGA_BLACK << 8);
+    for(int i = 0; i < VGA_AREA; i++)
+    {
+        vga_buffer[i] = blank;
+    }
 
+    cursor_x = 0;
+    cursor_y = 0;
 }
