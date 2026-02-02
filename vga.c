@@ -4,7 +4,9 @@ static volatile uint16_t* vga_buffer = (uint16_t*)0xB8000;
 static uint32_t cursor_x = 0;
 static uint32_t cursor_y = 0;
 static uint32_t position;
-static enum vga_colour current_colour = VGA_LIGHT_GREY;
+static uint16_t character;
+static uint16_t colour = (uint16_t) VGA_WHITE << 8;;
+static uint16_t printed;
 
 void vga_putchar(const char c)
 {
@@ -32,8 +34,7 @@ void vga_putchar(const char c)
 
     if(c == '\a')
     {
-        uint16_t character = (uint16_t) 'A';
-        uint16_t colour = (uint16_t) VGA_WHITE << 8;
+        character = (uint16_t) 'A';
         uint16_t alarm = character | colour;
         cursor_y++;
         cursor_x = 0;
@@ -42,5 +43,22 @@ void vga_putchar(const char c)
             position = (cursor_y * VGA_WIDTH) + cursor_x;
             vga_buffer[position] = alarm;
         }
+        return;
     }
+
+    character = (uint16_t) c;
+    printed = colour | character;
+    
+    position = (cursor_y * VGA_WIDTH) + cursor_x;
+    vga_buffer[position] = printed;
+    cursor_x++;
+
+    if(cursor_x > VGA_WIDTH)
+    {
+        cursor_y++;
+        cursor_x = 0;
+    }
+
+    return;
+
 }
