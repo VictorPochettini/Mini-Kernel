@@ -71,3 +71,11 @@ void vga_clear()
     cursor_x = 0;
     cursor_y = 0;
 }
+
+void vga_write(const char* str)
+{
+    for(int i = 0; str[i] != '\0'; i++)
+    {
+        vga_putchar(str[i]);
+    }
+}
