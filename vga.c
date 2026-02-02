@@ -53,12 +53,11 @@ void vga_putchar(const char c)
     vga_buffer[position] = printed;
     cursor_x++;
 
-    if(cursor_x > VGA_WIDTH)
+    if(cursor_x >= VGA_WIDTH)
     {
         cursor_y++;
         cursor_x = 0;
     }
 
-    return;
 
 }
