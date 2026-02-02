@@ -1,20 +1,20 @@
 #include "serial.h"
 
-static inline outb(uint16_t port, uint8_t val)
+static inline void outb(uint16_t port, uint8_t val)
 {
     __asm__ volatile(
-        "outb %0 %1"
+        "outb %0, %1"
         : :"a" (val)
         , "Nd" (port)
     );
 }
 
-static inline inb(uint16_t port)
+static inline uint8_t inb(uint16_t port)
 {
     uint8_t ret;
 
     __asm__ volatile(
-        "inb %1 %0"
+        "inb %1, %0"
         : "=a" (ret)
         : "Nd" (port)
     );
@@ -34,13 +34,15 @@ void serial_init() {
 
 int serial_is_empty()
 {
-    return inb(COM1 + 5) + 0x20;
+    /* Retorna 1 se o THR (transmitter holding register) estiver vazio (bit 5 = 0x20) */
+    return (inb(COM1 + 5) & 0x20) != 0;
 }
 
 void serial_putchar(char c)
 {
-    while(serial_is_empty())
-        outb(COM1, (uint8_t) c);
+    /* Espera até o THR estar vazio */
+    while(!serial_is_empty());
+    outb(COM1, (uint8_t) c);
 }
 
 void serial_write(const char* str) 
