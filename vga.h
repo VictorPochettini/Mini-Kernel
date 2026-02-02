@@ -32,6 +32,6 @@ void vga_init();
 void vga_clear();
 void vga_putchar(const char c);
 void vga_write(const char* str);
-void vga_write_line(const char* str);
+void vga_write_line(const char c, int length);
 
 #endif // VGA_H

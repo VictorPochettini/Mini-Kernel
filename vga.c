@@ -79,3 +79,11 @@ void vga_write(const char* str)
         vga_putchar(str[i]);
     }
 }
+
+void vga_write_line(char c, int length)
+{
+    for(int i = 0; i < length; i++)
+    {
+        vga_putchar(c);
+    }
+}
