@@ -8,6 +8,12 @@ static uint16_t character;
 static uint16_t colour = (uint16_t) VGA_LIGHT_GREEN << 8;;
 static uint16_t printed;
 
+//Added this in case I need to add more logic later
+void vga_init()
+{
+    vga_clear();
+}
+
 void vga_putchar(const char c)
 {
     if(c == '\n')
