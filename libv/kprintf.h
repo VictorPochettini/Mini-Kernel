@@ -6,6 +6,6 @@
 
 void init_kprintf();
 void kputs(const char* str);
-void kputchar(const char c);
 void kprintf(const char* str, ...);
+inline void kputchar(const char c);
 #endif

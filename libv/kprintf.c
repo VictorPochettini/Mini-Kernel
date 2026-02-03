@@ -8,7 +8,7 @@ void init_kprintf()
     vga_init();
 }
 
-void kputchar(const char c)
+inline void kputchar(const char c)
 {
     serial_putchar(c);
     vga_putchar(c);
@@ -20,8 +20,24 @@ void kputs(const char* str)
         kputchar(*str++);
 }
 
+static inline int power(int base, int exp)
+{
+    int result = 1;
+    for(int i = 0; i < exp; i++)
+        result *= base;
+    return result;
+}
+
+static inline char int_to_char(int v)
+{
+    return 48 + (v % 10);
+}
+
 void kprint_int(int v)
 {
+    if(v == 0)
+        return 48;
+
     if(v < 0)
     {
         kputchar('-');
@@ -41,19 +57,6 @@ void kprint_int(int v)
     {
         kputchar(int_to_char(v / power(10, (acc - i))));
     }
-}
-
-static inline int power(int base, int exp)
-{
-    int result = 1;
-    for(int i = 0; i < exp; i++)
-        result *= base;
-    return result;
-}
-
-static inline char int_to_char(int v)
-{
-    return 48 + (v % 10);
 }
 
 

@@ -32,7 +32,7 @@ void serial_init() {
     outb(COM1 + 4, 0x0B);    // IRQs habilitadas, RTS/DSR set
 }
 
-int serial_is_empty()
+static inline int serial_is_empty()
 {
     /* Retorna 1 se o THR (transmitter holding register) estiver vazio (bit 5 = 0x20) */
     return (inb(COM1 + 5) & 0x20) != 0;
