@@ -20,6 +20,43 @@ void kputs(const char* str)
         kputchar(*str++);
 }
 
+void kprint_int(int v)
+{
+    if(v < 0)
+    {
+        kputchar('-');
+        v = -v;
+    }
+
+    int acc = 0;
+    int aux = v;
+
+    while(aux >= 10)
+    {
+        aux /= 10;
+        acc++;
+    }
+
+    for(int i = 0; i <= acc; i++)
+    {
+        kputchar(int_to_char(v / power(10, (acc - i))));
+    }
+}
+
+static inline int power(int base, int exp)
+{
+    int result = 1;
+    for(int i = 0; i < exp; i++)
+        result *= base;
+    return result;
+}
+
+static inline char int_to_char(int v)
+{
+    return 48 + (v % 10);
+}
+
+
 void kprintf(const char* str, ...)
 {
 	va_list args;
@@ -33,20 +70,22 @@ void kprintf(const char* str, ...)
 			switch(str[i])
 			{
 				case 'd':
-					int v = va_args(args, int);
+					int v = va_arg(args, int);
 					kprint_int(v);
 					break;
 				case 'c':
-					char c = (char) va_args(args, int);
+					char c = (char) va_arg(args, int);
 					kputchar(c);
 					break;
 				case 's':
-					char* s = va_args(args,  char*);
+					char* s = va_arg(args,  char*);
 					kputs(s);
 					break;	
 			}
 		}
 		else
-			kputc(str[i]);
+			kputchar(str[i]);
 	}
+
+    va_end(args);
 }

@@ -7,5 +7,5 @@
 void init_kprintf();
 void kputs(const char* str);
 void kputchar(const char c);
-void kprintf();
+void kprintf(const char* str, ...);
 #endif
