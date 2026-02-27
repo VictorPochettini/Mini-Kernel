@@ -4,6 +4,7 @@
 
 void kernel_main(void)
 {
+
 	vga_init();
 
 	vga_write_line('=', VGA_WIDTH);

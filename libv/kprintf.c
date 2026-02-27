@@ -8,7 +8,7 @@ void init_kprintf()
     vga_init();
 }
 
-inline void kputchar(const char c)
+void kputchar(const char c)
 {
     serial_putchar(c);
     vga_putchar(c);
