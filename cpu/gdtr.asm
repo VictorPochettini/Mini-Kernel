@@ -1,6 +1,9 @@
-gdtr DW 0
-     DD 0
+section .data
+     gdtr DW 0
+          DD 0
 
+section .text
+global setGdt
 setGdt:
     MOV AX, [esp + 4]
     MOV [gdtr], AX
