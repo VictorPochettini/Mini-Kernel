@@ -1,9 +1,15 @@
 #include "libv/vga.h"
 #include "libv/serial.h"
 #include "libv/kprintf.h"
+#include "cpu/gdt.h"
+
+extern void setGdt(uint16_t limit, uint32_t base);
 
 void kernel_main(void)
 {
+
+	struct gdt_entry* gdt = init_gdt();
+	setGdt(sizeof(struct gdt_entry) * 3 - 1, (uint32_t) gdt);
 
 	vga_init();
 
