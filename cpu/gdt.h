@@ -22,6 +22,6 @@ struct gdtr
 	uint32_t base;
 } __attribute__((packed));
 
-struct gdt_entry* init_gdt()
+struct gdt_entry* init_gdt();
 
 #endif

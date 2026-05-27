@@ -1,6 +1,8 @@
 #include "gdt.h"
 #include <stdint.h>
 
+extern void setGdt(uint16_t limit, uint32_t base);
+
 static inline struct gdt_entry set_gdt_entry(uint32_t limit, uint32_t base, uint8_t access, uint8_t flags)
 {
 	struct gdt_entry entry;
@@ -15,7 +17,7 @@ static inline struct gdt_entry set_gdt_entry(uint32_t limit, uint32_t base, uint
 	return entry;
 }
 
-struct gdt_entry* init_gdt()
+void init_gdt()
 {
 	//Null Descriptor
 	uint32_t limit_null = 0x00000000;
@@ -43,5 +45,5 @@ struct gdt_entry* init_gdt()
 	gdt[1] = KMCS_entry;
 	gdt[2] = KMDS_entry;
 
-	return gdt;
+	setGdt(sizeof(struct gdt_entry) * 3 - 1, (uint32_t) gdt);
 }
