@@ -2,7 +2,7 @@
 #include "../libv/serial.h"
 #include <stdint.h>
 
-void pic_remap()
+void pic_init()
 {
     int mask1 = inb(PIC1_DATA); // save masks
     int mask2 = inb(PIC2_DATA); // save masks

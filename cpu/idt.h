@@ -16,4 +16,6 @@ struct idtr {
     uint32_t base;
 } __attribute__((packed));
 
+void init_idt();
+
 #endif
